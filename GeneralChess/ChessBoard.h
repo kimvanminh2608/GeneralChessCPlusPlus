@@ -101,24 +101,25 @@ public:
 						cout << bgColor << " " << _board[row][col]->toString() << "   \033[0m";
 					}
 					else {
-						cout << bgColor << "   \033[0m";
+						cout << bgColor << " " << "  " << "   \033[0m";
 					}
 				}
 				cout << endl;
 			}
 		}
-		cout << "    a   b   c   d   e   f   g   h   i" << endl;
+		cout << "    a     b     c     d     e     f     g     h     i" << endl;
 	}
 
 	// Check if any piece can attack the king
-	bool isKingInCheck(string color) {
+	bool isKingInCheck(string color) 
+	{
 		int kingRow, kingCol;
 		// Find the king's position
-		for (int row = 0; row < 8; ++row)
+		for (int row = 0; row < 10; ++row)
 		{
-			for (int col = 0; col < 8; ++col)
+			for (int col = 0; col < 9; ++col)
 			{
-				if (_board[row][col] != nullptr && _board[row][col]->_name == "King" && _board[row][col]->_color == color)
+				if (_board[row][col] != nullptr && _board[row][col]->_name == "General" && _board[row][col]->_color == color)
 				{
 					kingRow = row;
 					kingCol = col;
@@ -127,9 +128,9 @@ public:
 			}
 		}
 		// Check if any opponent piece can attack the king
-		for (int row = 0; row < 8; ++row)
+		for (int row = 0; row < 10; ++row)
 		{
-			for (int col = 0; col < 8; ++col)
+			for (int col = 0; col < 9; ++col)
 			{
 				ChessPiece* piece = _board[row][col];
 				if (piece != nullptr && piece->_color != color)
@@ -144,10 +145,11 @@ public:
 	}
 
 	// Simulate a move to check if it results in check
-	bool simulateMoveAndCheck(string start, string end, string color) {
-		int startRow = 8 - (start[1] - '0');
+	bool simulateMoveAndCheck(string start, string end, string color)
+	{
+		int startRow = 9 - (start[1] - '0');
 		int startCol = start[0] - 'a';
-		int endRow = 8 - (end[1] - '0');
+		int endRow = 9 - (end[1] - '0');
 		int endCol = end[0] - 'a';
 
 		ChessPiece* piece = _board[startRow][startCol];
@@ -166,10 +168,11 @@ public:
 		return kingInCheck;
 	}
 
-	void movePiece(string start, string end) {
-		int startRow = 8 - (start[1] - '0');
+	void movePiece(string start, string end)
+	{
+		int startRow = 9 - (start[1] - '0');
 		int startCol = start[0] - 'a';
-		int endRow = 8 - (end[1] - '0');
+		int endRow = 9 - (end[1] - '0');
 		int endCol = end[0] - 'a';
 
 		ChessPiece* piece = _board[startRow][startCol];
@@ -185,7 +188,7 @@ public:
 				_board[endRow][endCol] = piece;
 				_board[startRow][startCol] = nullptr;
 
-				if (isKingInCheck(piece->_color == "White" ? "Black" : "White"))
+				if (isKingInCheck(piece->_color == "Red" ? "Black" : "Red"))
 				{
 					cout << "Check!" << endl;
 				}
